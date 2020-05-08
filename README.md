@@ -2,6 +2,20 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.4.
 
+## Project
+
+Leveraging the Spotify Web API, users will be able to search for music and create playlists (forthcoming).
+
+## TODO
+
+* --Clean up Album Cover layout--
+
+* --Preview Tracks--
+
+* --Playlist component--
+
+* --Playlist UI--
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
