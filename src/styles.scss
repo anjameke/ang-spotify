@@ -1,0 +1,102 @@
+/* You can add global styles to this file, and also import other style files */
+// @import "_variables.scss", "_bootswatch.scss"
+@import "bootstrap.min.css";
+
+nav {
+
+    background: #383838;
+    font-size: 1.25rem;
+
+    a {
+        color: #1DB954;
+    }
+}
+
+.navbar {
+
+    padding: 0.5rem 2rem;
+
+}
+
+.container {
+
+    width: 100%;
+    padding-right: 2rem;
+    padding-left: 2rem;
+    margin-right: auto;
+    margin-left: 0;
+    padding-top: 3rem;
+
+}
+
+.form-control {
+
+    width: 50%;
+
+}
+
+.well {
+
+    background-color: #101010;
+
+}
+
+.row {
+
+    padding-bottom: 15px;
+
+    h4 {
+
+        padding-top: 15px;
+        padding-bottom: 15px;
+        padding-left: 15px;
+
+    }
+
+    strong {
+        padding-left: 15px;
+    }
+}
+
+.btn-danger {
+
+    background-color: #1DB954;
+    border-color: #1DB954;
+
+}
+
+.btn-danger:hover, .btn-danger:focus, .btn-danger:active {
+    
+    background-color: green;
+    border-color: green;
+
+}
+
+a:not([href]) {
+
+    color: black;
+
+}
+
+.artist-header {
+
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: sold 1px #333;
+
+}
+
+.artist-thumb {
+
+    width: 80px;
+    height: auto;
+    float: left;
+    margin-right: 10px;
+    
+}
+
+.card {
+    
+    background-color: inherit;
+
+}

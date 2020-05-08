@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SearchComponent } from './search/search.component';
+import { AboutComponent } from './about/about.component';
+import { SpotifyService } from '../services/spotify.service'
+import { HttpModule } from '@angular/http';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
+  providers: [HttpModule, SpotifyService]
+})
+export class AppComponent {
+  title = 'ang-spotify';
+}

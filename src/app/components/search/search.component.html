@@ -1,0 +1,24 @@
+<h1>Looking for Music?</h1>
+<p class="lead">You can use this web app to find your favorite songs, ala Spotify!</p>
+<form>
+    <div class="form-group">
+        <!-- <input type="text" name="searchStr" [(ngModel)]="searchStr" (keyup)="searchMusic()" class="form-control" placeholder="Search Music..."> -->
+        <input type="text" [formControl]="query" class="form-control" placeholder="Search Music...">
+    </div>
+</form>
+
+<div *ngIf="results">
+    <div *ngFor="let result of results">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="search-results well">
+                    <h4><a routerLink="/artist/{{result.id}}">{{result.name}}</a></h4>
+                    <div>
+                        <strong>Genres: </strong>
+                        <span *ngFor="let genres of result.genres">{{genres}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
