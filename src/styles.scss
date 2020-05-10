@@ -98,5 +98,83 @@ a:not([href]) {
 .card {
     
     background-color: inherit;
+    max-height: 440px;
+    max-width: 300px;
+}
 
+.artist-albums {
+
+    width: 100vw;
+
+    .well {
+        margin-bottom: 25px;
+        overflow: auto;
+        min-height: 400px;
+    }
+}
+
+.album {
+    text-align: center;
+    background: #303030;
+    padding: 20px 20px;
+    border: #666 1px solid;
+}
+
+.alumb-thumb {
+    width:100%;
+}
+
+a.btn.btn-default.btn-block {
+
+    background-color: white;
+    color: black;
+}
+
+a.btn.btn-default.btn-block:hover, a.btn.btn-default.btn-block:focus, a.btn.btn-default.btn-block:active:focus, a.btn.btn-default.btn-block.active {
+
+    background-color: grey !important;
+    color: black;
+
+}
+
+.well.album {
+
+    max-height: 409px;
+}
+
+.album-album-thumb {
+
+    float: left;
+    padding-right: 25px;
+
+}
+
+.col-md-8 {
+
+    display:inline;
+
+}
+
+img.album-album-thumb {
+    max-height: 400px;
+    max-width: 400px;
+}
+
+.album-tracks {
+    margin-top: 200px;
+
+}
+
+.tracks-container {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.well.track {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.well.track * {
+    margin-left: 15px;
 }

@@ -5,18 +5,17 @@ import { Album } from '../../models/Album';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'artist',
-  templateUrl: 'artist.component.html',
+  selector: 'album',
+  templateUrl: 'album.component.html',
   providers: [SpotifyService]
 })
-export class ArtistComponent implements OnInit {
+export class AlbumComponent implements OnInit {
   
     public id: string;
     
     // currently lazy and i don't wanna make all of spotify's associated classes w/n
     // the model folder. This is json anyways, might as well just parse.
-    public artist: any;
-    public albums: Array<Map<any, any>>;
+    public album: Map<any, any>;
 
     constructor(private spotifyService:SpotifyService,
                 private route:ActivatedRoute) { }
@@ -27,16 +26,10 @@ export class ArtistComponent implements OnInit {
             .subscribe((id) => {
                 this.spotifyService.getAuth()
                     .subscribe(res => {
-                        this.spotifyService.getArtist(id, 'artist', res.access_token)
-                        .subscribe(artist => {
-                            this.artist = artist;
-                        });
-                        this.spotifyService.getAlbums(id, res.access_token)
-                        .subscribe(albums => {
-                            console.log(albums.items);
-                            let dupeAlbums = albums.items;
-                            this.albums = dupeAlbums.filter((e, i) => dupeAlbums
-                                                    .findIndex(a => a.name.toLowerCase() === e.name.toLowerCase()) === i)
+                        this.spotifyService.getAlbum(id, res.access_token)
+                        .subscribe(album => {
+                            console.log(album.items);
+                            this.album = album;
                         });
                     });
             });

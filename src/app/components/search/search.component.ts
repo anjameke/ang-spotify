@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SpotifyService } from '../../services/spotify.service';
-import { FormControl } from '@angular/forms';
-import { debounceTime, distinctUntilChanged } from 'rxjs/internal/operators';
+import { FormControl, Validators } from '@angular/forms';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/internal/operators';
 import { Artist } from '../../models/Artist';
 
 @Component({
@@ -14,7 +14,7 @@ export class SearchComponent implements OnInit {
 
   public searchStr: string;
   public results: Artist[];
-  public query: FormControl = new FormControl();
+  public query: FormControl = new FormControl("", Validators.minLength(1));
 
   constructor(private spotifyService: SpotifyService) {
 
@@ -22,13 +22,14 @@ export class SearchComponent implements OnInit {
 
   ngOnInit() {
     this.query.valueChanges
-      .pipe(debounceTime(400),
-            distinctUntilChanged()
+      .pipe(
+        filter(input => input.length >= 1),
+        debounceTime(400),
+        distinctUntilChanged()
       )
       .subscribe(query => this.spotifyService.getAuth()
         .subscribe(res => this.spotifyService.searchMusic(query, 'artist', res.access_token).subscribe(
           res => {
-            console.log(res.artists.items)
             this.results = res.artists.items
           })
         ));
