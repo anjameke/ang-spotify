@@ -1,10 +1,23 @@
-<h1>Looking for Artists?</h1>
-<p class="lead">You can use this web app to find your favorite songs, ala Spotify!</p>
+<h1>Looking for {{isSearchable() ? "Tracks or Artist" : searchType}}s?</h1>
+<p class="lead">You can use this web app to find your favorite {{isSearchable() ? "tracks or artist" : searchType}}s, ala Spotify!</p>
 <form>
     <div class="form-group">
-        <!-- <input type="text" name="searchStr" [(ngModel)]="searchStr" (keyup)="searchMusic()" class="form-control" placeholder="Search Music..."> -->
-        <input type="text" [formControl]="query" class="form-control" placeholder="Search for Artists...">
+        <form [formGroup]="search">
+            <div *ngIf="searchType">
+                <input type="text" formControlName="searchQuery" class="form-control" placeholder="{{searchType}}s...">
+            </div>
+        </form>
+        <label id="search-type">Select search type</label>
+        <mat-radio-group 
+            aria-labelledby="radio-group-label" 
+            class="radio-group"
+            [(ngModel)]="searchType"
+            name="searchType">
+            <mat-radio-button class="radio-button" value="artist" (click)="search.get('searchQuery').reset(''); results = null;" (ngModelChange)="onSearchChange($event)">artist</mat-radio-button>
+            <mat-radio-button class="radio-button" value="track" (click)="search.get('searchQuery').reset(''); results = null;" (ngModelChange)="search.get('searchQuery').reset(''); onSearchChange($event)">track</mat-radio-button>
+        </mat-radio-group>
     </div>
+    <h2>{{searchType}}</h2>
 </form>
 
 <div *ngIf="results">
@@ -12,10 +25,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="search-results well">
-                    <h4><a routerLink="/artist/{{result.id}}">{{result.name}}</a></h4>
-                    <div>
+                    <h4 *ngIf="isArtistSearch()">
+                        <a routerLink="/artist/{{result.id}}">{{result.name}}</a>
+                    </h4>
+                    <h4 *ngIf="!isArtistSearch()">
+                        <a routerLink="/track/{{result.id}}">{{result.name}}</a>
+                    </h4>
+                    <div *ngIf="searchType === 'artist'">
                         <strong>Genres: </strong>
                         <span *ngFor="let genres of result.genres">{{genres}} </span>
+                    </div>
+                    <div *ngIf="searchType === 'track'">
+                        <strong>Arist: </strong>
+                        <span *ngFor="let artist of result.artists">{{artist.name}} </span>
                     </div>
                 </div>
             </div>

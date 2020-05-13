@@ -3,6 +3,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SearchComponent } from './search/search.component';
 import { AboutComponent } from './about/about.component';
 import { AlbumComponent } from './album/album.component';
+import { TrackComponent } from './track/track.component';
 import { SpotifyService } from '../services/spotify.service'
 import { HttpModule } from '@angular/http';
 

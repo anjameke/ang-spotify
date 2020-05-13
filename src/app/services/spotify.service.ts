@@ -10,6 +10,7 @@ export class SpotifyService {
     private artistUrl: string;
     private albumsUrl: string;
     private albumUrl: string;
+    private trackUrl: string;
     private clientID: string = environment.clientId;
     private clientSecret: string = environment.clientSecret;
 
@@ -73,6 +74,17 @@ export class SpotifyService {
         this.albumUrl = 'https://api.spotify.com/v1/albums/' + albumId;
         
         return this._http.get(this.albumUrl, { headers: headers })
+            .map(res => res.json());
+    }
+
+    getTrack(trackId:string, authToken:string) {
+
+        let headers = new Headers();
+        headers.append('Authorization', 'Bearer ' + authToken);
+
+        this.trackUrl = 'https://api.spotify.com/v1/tracks/' + trackId;
+
+        return this._http.get(this.trackUrl, { headers: headers })
             .map(res => res.json());
     }
 }
