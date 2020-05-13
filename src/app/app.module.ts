@@ -16,6 +16,7 @@ import { SearchComponent } from './components/search/search.component';
 import { ArtistComponent } from './components/artist/artist.component';
 import { AlbumComponent } from './components/album/album.component';
 import { TrackComponent } from './components/track/track.component';
+import { PlaylistComponent } from './components/playlist/playlist.component';
 import { NoPageFoundComponent } from './components/noPageFound/noPageFound.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { NoPageFoundComponent } from './components/noPageFound/noPageFound.compo
     ArtistComponent,
     AlbumComponent,
     TrackComponent,
+    PlaylistComponent,
     NoPageFoundComponent
   ],
   imports: [
