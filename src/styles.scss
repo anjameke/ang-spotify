@@ -3,14 +3,19 @@
 @import "bootstrap.min.css";
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
-html, body {
-    height: 100% !important;
-    overflow: hidden;
-}
 
 @media only screen and (max-width:400px) {
     .title-header {
         padding-top: 30px;
+    }
+}
+
+@media only screen and (max-width:375px) {
+    img.album-album-thumb {
+        max-width: 100% !important;
+        width: auto !important;
+        height:auto !important;
+        padding-top: 35px !important;
     }
 }
 
@@ -177,7 +182,6 @@ a.btn.btn-default.btn-block:hover, a.btn.btn-default.btn-block:focus, a.btn.btn-
 }
 
 .album-album-thumb {
-
     float: left;
     padding-right: 25px;
 
