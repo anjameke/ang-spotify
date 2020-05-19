@@ -3,13 +3,42 @@
 @import "bootstrap.min.css";
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
 
+html, body {
+    height: 100% !important;
+    overflow: hidden;
+}
+
+@media only screen and (max-width:400px) {
+    .title-header {
+        padding-top: 30px;
+    }
+}
+
+.error {
+    color: red;
+    font-size: 11px;
+}
+
+button.btn.btn-primary.create-playlist-btn {
+    background-color: #1DB954;
+    border-color: green;
+}
+button.btn.btn-primary.create-playlist-btn:hover:enabled {
+    background-color: green;
+}
+
+.btn-primary:disabled {
+    color: #fff;
+    cursor: not-allowed;
+}
+
 nav {
 
     background: #383838;
     font-size: 1.25rem;
 
     a {
-        color: #1DB954;
+        color: #1DB954 !important;
     }
 }
 
@@ -19,6 +48,10 @@ nav {
 
 }
 
+a {
+    color: #1DB954;
+}
+
 .container {
 
     width: 100%;
@@ -26,7 +59,7 @@ nav {
     padding-left: 2rem;
     margin-right: auto;
     margin-left: 0;
-    padding-top: 3rem;
+    padding-top: 4rem;
 
 }
 
@@ -246,4 +279,8 @@ label {
 
 .track-link-container {
     width: fit-content;
+}
+
+.input-container {
+    padding-bottom: 10px;
 }

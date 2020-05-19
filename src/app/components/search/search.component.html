@@ -1,5 +1,7 @@
-<h1>Looking for {{isSearchable() ? "Tracks or Artist" : searchType}}s?</h1>
-<p class="lead">You can use this web app to find your favorite {{isSearchable() ? "tracks or artist" : searchType}}s, ala Spotify!</p>
+<h1 *ngIf="isNotSearchable()" class="title-header">Looking for a Track or Artist?</h1>
+<h1 *ngIf="isArtistSearch()" class="title-header">Looking for an {{searchType.charAt(0).toUpperCase() + searchType.slice(1)}}?</h1>
+<h1 *ngIf="!isNotSearchable() && !isArtistSearch()" class="title-header">Looking for a {{searchType.charAt(0).toUpperCase() + searchType.slice(1)}}?</h1>
+<p class="lead">You can use this web app to find your favorite {{isNotSearchable() ? "tracks or artist" : searchType}}s, ala Spotify!</p>
 <form>
     <div class="form-group">
         <form [formGroup]="search">
@@ -17,7 +19,6 @@
             <mat-radio-button class="radio-button" value="track" (click)="search.get('searchQuery').reset(''); results = null;" (ngModelChange)="search.get('searchQuery').reset(''); onSearchChange($event)">track</mat-radio-button>
         </mat-radio-group>
     </div>
-    <h2>{{searchType}}</h2>
 </form>
 
 <div *ngIf="results">

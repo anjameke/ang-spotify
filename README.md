@@ -8,13 +8,18 @@ Leveraging the Spotify Web API, users will be able to search for music and creat
 
 ## TODO
 
-* --Clean up Album Cover layout--
+* ~~Clean up Album Cover layout~~
 
-* --Preview Tracks--
+* ~~Preview Tracks~~
 
-* --Playlist component--
+* Playlist component
 
-* --Playlist UI--
+* Switch from well containers to embed spotify play widget
+
+* ~~Playlist UI~~
+
+## Using this web application
+
 
 ## Development server
 

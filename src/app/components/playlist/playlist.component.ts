@@ -2,7 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, Input, Output, Directive } from '
 import { SpotifyService } from '../../services/spotify.service';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, filter } from 'rxjs/internal/operators';
-import { Artist } from '../../models/Artist';
+import { forbiddenCharacterValidator } from '../../validators/forbiddenCharacterValidator';
 
 @Component({
   selector: 'playlist',
@@ -13,17 +13,9 @@ import { Artist } from '../../models/Artist';
 
 export class PlaylistComponent implements OnInit {
 
-  // public searchStr: string;
-  public results: any;
-  public query: FormControl = new FormControl("", Validators.minLength(1));
+  public query: FormControl = new FormControl("", [Validators.minLength(1), forbiddenCharacterValidator(/[^\.,]/g)]);
+  public name: FormControl = new FormControl("", Validators.required);
 
-  public searchType: string;
-
-  public search: FormGroup = new FormGroup({
-      searchAllowed: new FormControl(this.searchType, Validators.required),
-      searchQuery: new FormControl("", Validators.minLength(1)),
-      isSearch: new FormControl(this.searchType, Validators.required)
-  });
 
   constructor(private spotifyService: SpotifyService,
               private cd: ChangeDetectorRef) {
@@ -31,14 +23,23 @@ export class PlaylistComponent implements OnInit {
   }
 
   ngOnInit() {
+
     // this.search.get('isSearch').valueChanges.pipe(distinctUntilChanged());
     // this.search.get('searchQuery').valueChanges
-    // // this.query.valueChanges
-    //   .pipe(
-    //     filter(input => input.length >= 1),
-    //     debounceTime(400),
-    //     distinctUntilChanged()
-    //   )
+
+    this.name.valueChanges
+      .pipe(
+        filter(input => input.length >=1 ),
+        debounceTime(400),
+        distinctUntilChanged()
+      )
+    this.query.valueChanges
+      .pipe(
+        filter(input => input.length >= 1),
+        debounceTime(400),
+        distinctUntilChanged()
+      ).subscribe(res => {console.log(this.query.value); console.log(this.query.errors)});
+      // console.log(this.query.value);
     //   .subscribe(query => this.spotifyService.getAuth()
     //     .subscribe(res => this.spotifyService.searchMusic(query, this.searchType, res.access_token).subscribe(
     //       res => {
@@ -55,9 +56,11 @@ export class PlaylistComponent implements OnInit {
     //     ));
   }
 
-//   onSearchChange(search:string) {
-//     this.searchType = search;
-//     this.cd.markForCheck();
-//   }
+  onSubmit() {
+    this.query.valueChanges.subscribe(q => 
+        this.spotifyService.getAuth()
+            .subscribe(res => 
+              this.spotifyService.createPlaylist(this.name.value, true, '', res.access_token)))
+  }
 
 }

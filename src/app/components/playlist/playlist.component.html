@@ -1,1 +1,13 @@
-WANNA MAKE SOME PLAYLISTS????
+<h1 class="title-header">Create Playlist</h1>
+<div class="form-group">
+    <div class="input-container">
+        <h6>Playlist name</h6>
+        <input type="text" [formControl]="name" class="form-control" placeholder="My default playlist">
+    </div>
+    <div class="input-container">
+        <h6>Tracks for playlist</h6>
+        <input type="text" [formControl]="query" class="form-control" placeholder="Enter comma separated list of tracks">
+        <div *ngIf="query.errors" class="error"><i>Track list cannot contain special characters</i></div>
+        <button type="submit" class="btn btn-primary create-playlist-btn" [disabled]="query.value < 1 || query.errors">Create playlist</button>
+    </div>
+</div>

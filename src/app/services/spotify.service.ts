@@ -11,6 +11,8 @@ export class SpotifyService {
     private albumsUrl: string;
     private albumUrl: string;
     private trackUrl: string;
+    private userUrl: string;
+    private playlistUrl: string;
     private clientID: string = environment.clientId;
     private clientSecret: string = environment.clientSecret;
 
@@ -85,6 +87,42 @@ export class SpotifyService {
         this.trackUrl = 'https://api.spotify.com/v1/tracks/' + trackId;
 
         return this._http.get(this.trackUrl, { headers: headers })
+            .map(res => res.json());
+    }
+
+    createPlaylist(
+        name:string = 'My Created Playlist', 
+        isPublic: boolean = true, 
+        description:string,
+        authToken:string) {
+
+        let headers = new Headers();
+        headers.append('Authorization', 'Bearer ' + authToken);
+
+        let body = {
+            name: name,
+            public: isPublic,
+            description: description
+        }
+
+        let userId = this.getUserProfile(authToken)
+                         .subscribe(user => {
+                            userId = user.id });
+
+        this.playlistUrl = 'https://api.spotify.com/v1/users/' + userId + '/playlists';
+
+        return this._http.post(this.playlistUrl, body, { headers: headers })
+            .map(res => res.json());
+    }
+
+    private getUserProfile(authToken:string) {
+
+        let headers = new Headers();
+        headers.append('Authorization', 'Bearer ' + authToken);
+
+        this.userUrl = 'https://api.spotify.com/v1/me';
+
+        return this._http.get(this.userUrl, { headers: headers })
             .map(res => res.json());
     }
 }

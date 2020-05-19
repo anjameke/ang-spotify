@@ -35,7 +35,6 @@ export class SearchComponent implements OnInit {
     this.checkSearch();
     this.search.get('isSearch').valueChanges.pipe(distinctUntilChanged());
     this.search.get('searchQuery').valueChanges
-    // this.query.valueChanges
       .pipe(
         filter(input => input.length >= 1),
         debounceTime(400),
@@ -52,7 +51,6 @@ export class SearchComponent implements OnInit {
               // calling track.id is accurate.
               this.results = res.tracks.items.map(({album, ...items}) => items);
             }
-            console.log(this.results);
           })
         ));
   }
@@ -65,7 +63,7 @@ export class SearchComponent implements OnInit {
   checkSearch() {
     this.search.get('searchAllowed').valueChanges.
       subscribe(searchable => {
-        if (!searchable || searchable.length === 0) {
+        if (this.isNotSearchable()) {
           this.search.get('searchAllowed').reset();
           this.search.get('searchAllowed').disable();
         } else {
@@ -74,7 +72,7 @@ export class SearchComponent implements OnInit {
       });
   }
 
-  public isSearchable() {
+  public isNotSearchable() {
     return !this.searchType || this.searchType.length === 0;
   }
 
