@@ -8,6 +8,6 @@
         <h6>Tracks for playlist</h6>
         <input type="text" [formControl]="query" class="form-control" placeholder="Enter comma separated list of tracks">
         <div *ngIf="query.errors" class="error"><i>Track list cannot contain special characters</i></div>
-        <button type="submit" class="btn btn-primary create-playlist-btn" [disabled]="query.value < 1 || query.errors">Create playlist</button>
+        <!-- <button type="submit" class="btn btn-primary create-playlist-btn" [disabled]="query.value < 1 || query.errors" (click)=onSubmit()>Create playlist</button> -->
     </div>
 </div>

@@ -16,7 +16,8 @@ export class PlaylistComponent implements OnInit {
   public query: FormControl = new FormControl("", [Validators.minLength(1), forbiddenCharacterValidator(/[^\.,]/g)]);
   public name: FormControl = new FormControl("", Validators.required);
 
-
+  public trackUris: any;
+  public playlistId: string;
   constructor(private spotifyService: SpotifyService,
               private cd: ChangeDetectorRef) {
 
@@ -57,10 +58,15 @@ export class PlaylistComponent implements OnInit {
   }
 
   onSubmit() {
+    let trackNames = this.query.value.split(",")
     this.query.valueChanges.subscribe(q => 
         this.spotifyService.getAuth()
             .subscribe(res => 
-              this.spotifyService.createPlaylist(this.name.value, true, '', res.access_token)))
+              // this.tracks.forEach(track =>  '')
+              this.spotifyService.createPlaylist(this.name.value, true, '', res.access_token)
+              .subscribe(res => this.playlistId = res.id)))
+    trackNames.forEach(trackName => {
+      // this.trackUris.push(this.spotifyService.g)
+    })          
   }
-
 }

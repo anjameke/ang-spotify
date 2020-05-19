@@ -1467,10 +1467,17 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         value: function onSubmit() {
           var _this4 = this;
 
+          var trackNames = this.query.value.split(",");
           this.query.valueChanges.subscribe(function (q) {
             return _this4.spotifyService.getAuth().subscribe(function (res) {
-              return _this4.spotifyService.createPlaylist(_this4.name.value, true, '', res.access_token);
+              return (// this.tracks.forEach(track =>  '')
+                _this4.spotifyService.createPlaylist(_this4.name.value, true, '', res.access_token).subscribe(function (res) {
+                  return _this4.playlistId = res.id;
+                })
+              );
             });
+          });
+          trackNames.forEach(function (trackName) {// this.trackUris.push(this.spotifyService.g)
           });
         }
       }]);
@@ -1488,7 +1495,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
       features: [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵProvidersFeature"]([_services_spotify_service__WEBPACK_IMPORTED_MODULE_1__["SpotifyService"]])],
       decls: 14,
       vars: 4,
-      consts: [[1, "title-header"], [1, "form-group"], [1, "input-container"], ["type", "text", "placeholder", "My default playlist", 1, "form-control", 3, "formControl"], ["type", "text", "placeholder", "Enter comma separated list of tracks", 1, "form-control", 3, "formControl"], ["class", "error", 4, "ngIf"], ["type", "submit", 1, "btn", "btn-primary", "create-playlist-btn", 3, "disabled"], [1, "error"]],
+      consts: [[1, "title-header"], [1, "form-group"], [1, "input-container"], ["type", "text", "placeholder", "My default playlist", 1, "form-control", 3, "formControl"], ["type", "text", "placeholder", "Enter comma separated list of tracks", 1, "form-control", 3, "formControl"], ["class", "error", 4, "ngIf"], ["type", "submit", 1, "btn", "btn-primary", "create-playlist-btn", 3, "disabled", "click"], [1, "error"]],
       template: function PlaylistComponent_Template(rf, ctx) {
         if (rf & 1) {
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](0, "h1", 0);
@@ -1524,6 +1531,10 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtemplate"](11, PlaylistComponent_div_11_Template, 3, 0, "div", 5);
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵelementStart"](12, "button", 6);
+
+          _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵlistener"]("click", function PlaylistComponent_Template_button_click_12_listener() {
+            return ctx.onSubmit();
+          });
 
           _angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵtext"](13, "Create playlist");
 
@@ -2449,6 +2460,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
         }
       }, {
+        key: "getUri",
+        value: function getUri(name, type, authToken) {
+          var search = this.searchMusic(name, type, authToken);
+          return search.subscribe(function (res) {
+            return res.uri;
+          });
+        }
+      }, {
         key: "getArtist",
         value: function getArtist(id) {
           var type = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'artist';
@@ -2517,6 +2536,18 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           this.playlistUrl = 'https://api.spotify.com/v1/users/' + userId + '/playlists';
           return this._http.post(this.playlistUrl, body, {
+            headers: headers
+          }).map(function (res) {
+            return res.json();
+          });
+        }
+      }, {
+        key: "addTrackToPlaylist",
+        value: function addTrackToPlaylist(playlistId, authToken, trackUri) {
+          var headers = new _angular_http__WEBPACK_IMPORTED_MODULE_2__["Headers"]();
+          headers.append('Authorization', 'Bearer ' + authToken);
+          this.addToPlaylistUrl = 'https://api.spotify.com/v1/playlists' + playlistId + '/tracks?uris=' + trackUri;
+          return this._http.post(this.addToPlaylistUrl, {
             headers: headers
           }).map(function (res) {
             return res.json();

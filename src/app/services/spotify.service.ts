@@ -13,6 +13,7 @@ export class SpotifyService {
     private trackUrl: string;
     private userUrl: string;
     private playlistUrl: string;
+    private addToPlaylistUrl: string;
     private clientID: string = environment.clientId;
     private clientSecret: string = environment.clientSecret;
 
@@ -44,6 +45,11 @@ export class SpotifyService {
 
         return this._http.get(this.searchUrl, { headers: headers })
             .map(res => res.json());
+    }
+
+    getUri(name:string, type:string, authToken:string) {
+        let search = this.searchMusic(name, type, authToken);
+        return search.subscribe(res => res.uri)
     }
 
     getArtist(id:string, type='artist', authToken:string) {
@@ -113,6 +119,17 @@ export class SpotifyService {
 
         return this._http.post(this.playlistUrl, body, { headers: headers })
             .map(res => res.json());
+    }
+
+    addTrackToPlaylist(playlistId:string, authToken:string, trackUri:string) {
+
+        let headers = new Headers()
+        headers.append('Authorization', 'Bearer '+ authToken)
+
+        this.addToPlaylistUrl = 'https://api.spotify.com/v1/playlists' + playlistId + '/tracks?uris=' + trackUri
+
+        return this._http.post(this.addToPlaylistUrl, { headers: headers })
+            .map(res => res.json())
     }
 
     private getUserProfile(authToken:string) {
