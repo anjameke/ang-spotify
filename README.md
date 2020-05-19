@@ -20,6 +20,7 @@ Leveraging the Spotify Web API, users will be able to search for music and creat
 
 ## Using this web application
 
+Go to https://anjameke.github.io/ang-spotify to play around with this web app!
 
 ## Development server
 
