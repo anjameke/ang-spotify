@@ -19,6 +19,12 @@
     }
 }
 
+@media only screen and (max-width:375px) {
+    .track-deets-container {
+        margin-top: 20px;
+    }
+}
+
 .error {
     color: red;
     font-size: 11px;
