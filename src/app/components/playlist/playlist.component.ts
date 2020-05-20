@@ -13,11 +13,13 @@ import { forbiddenCharacterValidator } from '../../validators/forbiddenCharacter
 
 export class PlaylistComponent implements OnInit {
 
-  public query: FormControl = new FormControl("", [Validators.minLength(1), forbiddenCharacterValidator(/[^\.,]/g)]);
+  public query: FormControl = new FormControl("", [Validators.minLength(1)]);
   public name: FormControl = new FormControl("", Validators.required);
 
   public trackUris: any;
   public playlistId: string;
+  public playlistUri: string;
+
   constructor(private spotifyService: SpotifyService,
               private cd: ChangeDetectorRef) {
 
@@ -40,21 +42,6 @@ export class PlaylistComponent implements OnInit {
         debounceTime(400),
         distinctUntilChanged()
       ).subscribe(res => {console.log(this.query.value); console.log(this.query.errors)});
-      // console.log(this.query.value);
-    //   .subscribe(query => this.spotifyService.getAuth()
-    //     .subscribe(res => this.spotifyService.searchMusic(query, this.searchType, res.access_token).subscribe(
-    //       res => {
-    //         console.log(this.searchType);
-    //         if (this.searchType === 'artist') {
-    //           this.results = res.artists.items
-    //         } else {
-    //           // /v1/search returns albums info with the tracks blurb, let's purge those so that
-    //           // calling track.id is accurate.
-    //           this.results = res.tracks.items.map(({album, ...items}) => items);
-    //         }
-    //         console.log(this.results);
-    //       })
-    //     ));
   }
 
   onSubmit() {
@@ -62,11 +49,19 @@ export class PlaylistComponent implements OnInit {
     this.query.valueChanges.subscribe(q => 
         this.spotifyService.getAuth()
             .subscribe(res => 
-              // this.tracks.forEach(track =>  '')
               this.spotifyService.createPlaylist(this.name.value, true, '', res.access_token)
-              .subscribe(res => this.playlistId = res.id)))
-    trackNames.forEach(trackName => {
-      // this.trackUris.push(this.spotifyService.g)
-    })          
+              .subscribe(res => {
+                this.playlistId = res.id;
+                this.playlistUri = res.external_urls.spotify;
+                trackNames.forEach(trackName => {
+                  this.trackUris.push(
+                    this.spotifyService.searchMusic(trackName, 'track', res.access_token)
+                      .subscribe(res => {
+                        res.items.external_urls.spotify;}))
+                  this.spotifyService.addTrackToPlaylist(this.playlistId, res.access_token, this.trackUris.join())
+                  
+                })
+              })))
+              
   }
 }

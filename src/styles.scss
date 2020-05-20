@@ -23,6 +23,20 @@
     .track-deets-container {
         margin-top: 20px;
     }
+
+    .artist-header {
+        padding-top: 35px;
+    }
+
+    .artist-name-header {
+        font-size: 2rem;
+    }
+
+    .artist-albums {
+        width: auto !important;
+        max-width: 100% !important;
+        height: auto;
+    }
 }
 
 .error {
